@@ -32,7 +32,7 @@ function App() {
         setCurr(j);
         setNext(j + 1);
         setArr([...arr]);
-        await sleep(1000);
+        await sleep(10);
         if (arr[j] > arr[j + 1]) {
           let temp = arr[j];
           arr[j] = arr[j + 1];
@@ -41,7 +41,7 @@ function App() {
           setNext(j + 1);
         }
         setArr([...arr]);
-        await sleep(200);
+        await sleep(20);
       }
     }
     setNext(null);
@@ -58,21 +58,21 @@ function App() {
         if (arr[j] < arr[min]) {
           min = j;
           setNext(min);
-          await sleep(100);
+          await sleep(10);
         }
         setArr([...arr]);
-        await sleep(500);
+        await sleep(50);
       }
       if (min !== i) {
         setCurr(i);
-        await sleep(500);
+        await sleep(50);
         setNext(i);
-        await sleep(500);
+        await sleep(50);
         let tmp = arr[i];
         arr[i] = arr[min];
         arr[min] = tmp;
         setArr([...arr]);
-        await sleep(500);
+        await sleep(50);
       }
       setNext(null);
       await sleep(100);
@@ -83,23 +83,21 @@ function App() {
   const insertionSort = async () => {
     let n = arr.length;
     for (let i = 1; i < n; i++) {
-      setCurr(i);
-      setNext(null);
-      await sleep(1000);
-      setCurr(null);
       let current = arr[i];
+      setCurr(i);
       let j = i - 1;
+
       while (j > -1 && current < arr[j]) {
         setNext(j);
         arr[j + 1] = arr[j];
         j--;
-        setArr([...arr]);
-        await sleep(1000);
+
+        await sleep(20);
       }
+
       arr[j + 1] = current;
-      setCurr(j + 1);
       setArr([...arr]);
-      await sleep(500);
+      await sleep(100);
     }
     setCurr(null);
     setNext(null);
@@ -146,7 +144,7 @@ function App() {
       index = start;
       setNext(index);
       while (index <= end) {
-        await sleep(300);
+        await sleep(30);
         arr[index] = itmd[index];
         setCurr(index);
         index++;
@@ -165,7 +163,7 @@ function App() {
 
         await mergeArray(start, end);
 
-        await sleep(200);
+        await sleep(20);
       }
       setCurr(null);
       setNext(null);
@@ -190,7 +188,7 @@ function App() {
           swap(arr, i, index);
           setCurr(index);
           setArr([...arr]);
-          await sleep(300);
+          await sleep(100);
           index++;
         }
       }
@@ -218,26 +216,21 @@ function App() {
 
   const heapSort = async () => {
     async function heapify(arr, n, i) {
-      var largest = i; // Initialize largest as root
-      var l = 2 * i + 1; // left = 2*i + 1
-      var r = 2 * i + 2; // right = 2*i + 2
-
-      // If left child is larger than root
+      var largest = i;
+      var l = 2 * i + 1;
+      var r = 2 * i + 2;
       if (l < n && arr[l] > arr[largest]) largest = l;
 
-      // If right child is larger than largest so far
       if (r < n && arr[r] > arr[largest]) largest = r;
 
-      // If largest is not root
       if (largest !== i) {
         var swap = arr[i];
         setCurr(i);
         arr[i] = arr[largest];
         arr[largest] = swap;
-        await sleep(5);
+        await sleep(30);
         setArr([...arr]);
 
-        // Recursively heapify the affected sub-tree
         await heapify(arr, n, largest);
       }
       setArr([...arr]);
@@ -246,14 +239,11 @@ function App() {
     async function addHeap(arr) {
       var n = arr.length;
 
-      // Build heap (rearrange array)
       for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
         await heapify(arr, n, i);
       }
 
-      // One by one extract an element from heap
       for (let i = n - 1; i > 0; i--) {
-        // Move current root to end
         var temp = arr[0];
         setNext(i);
         arr[0] = arr[i];
@@ -261,10 +251,8 @@ function App() {
         await sleep(10);
         setArr([...arr]);
 
-        // call max heapify on the reduced heap
         await heapify(arr, i, 0);
       }
-      // setArr([...arr]);
       setNext(null);
       setCurr(null);
     }
